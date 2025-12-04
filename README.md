@@ -24,8 +24,8 @@ Fully Dockerized — runs anywhere in seconds.
 
 ```bash
 # 1. Clone
-git clone https://github.com/yourname/codebase-gpt.git
-cd codebase-gpt
+git clone https://github.com/yourname/Codebase-GPT.git
+cd Codebase-GPT
 
 # 2. Put your Groq key in .env, create your own at https://groq.com/
 echo "GROQ_API_KEY=gsk_your_key_here" > .env
@@ -42,7 +42,7 @@ Drop files → ask anything → enjoy!
 ## Project Structure
 
 ```
-codebase-gpt/
+Codebase-GPT/
 ├── app/
 │   ├── templates/index.html    # beautiful chat UI
 │   ├── main.py                 # FastAPI + RAG logic
@@ -53,7 +53,7 @@ codebase-gpt/
 ├── models/                     # ← cached HuggingFace models
 ├── Dockerfile
 ├── docker-compose.yml
-├── .env                        # your Groq key
+└── .env                        # your Groq key
 
 ```
 
