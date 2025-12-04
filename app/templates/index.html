@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Codebase GPT</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        setInterval(() => {
+        }, 1000);
+    </script>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        #upload-area {
+            border: 3px dashed #007bff;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 15px;
+            background: #f0f8ff;
+        }
+
+        #chat {
+            height: 60vh;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .msg {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+        }
+
+        .ai {
+            background: #e9ecef;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .sources {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<h1>Codebase / Document GPT</h1>
+
+<div id="upload-area">
+    <p>Drag & drop files here or click to upload<br>(PDF, DOCX, Excel, TXT, code files...)</p>
+    <input type="file" multiple id="file-input" style="display:none">
+    <button onclick="$('#file-input').click()">Choose Files</button>
+    <div id="upload-status"></div>
+</div>
+
+<div id="chat"></div>
+<div style="display:flex; margin-top:10px;">
+    <input type="text" id="question" placeholder="Ask anything..." style="flex:1">
+    <button id="send">Send</button>
+</div>
+
+<script>
+function addMessage(text, type) {
+    $('<div class="msg">')
+        .addClass(type)
+        .text(text)
+        .appendTo('#chat');
+    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+}
+
+function send() {
+    const question = $('#question').val().trim();
+    if (!question) return;
+    addMessage(question, 'user');
+    $('#question').val('');
+
+    $.ajax({
+        url: "/query",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({question: question}),
+        success: function(data) {
+            addMessage(data.answer, 'ai');
+            if (data.sources?.length) {
+                $('<div class="sources">')
+                    .text("Sources: " + data.sources.join(", "))
+                    .appendTo('#chat');
+            }
+        },
+        error: function() { addMessage("Error — check terminal", 'ai'); }
+    });
+}
+
+$(function() {
+    $('#question').focus();
+    $('#question').on('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            send();
+        }
+    });
+    $('#send').on('click', send);
+});
+
+
+$('#file-input').change(function(e) {
+    const files = e.target.files;
+    if (files.length === 0) return;
+
+    const formData = new FormData();
+    for (let f of files) formData.append("files", f);
+
+    $("#upload-status").html("Uploading & indexing...");
+    $.ajax({
+        url: "/upload",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function() {
+            $("#upload-status").html(`✅ ${files.length} file(s) added and indexed!`);
+            setTimeout(() => $("#upload-status").html(""), 3000);
+        },
+        error: () => $("#upload-status").html("Upload failed")
+    });
+});
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+langchain==1.1.0
+langchain-huggingface
+langchain-chroma
+langchain-groq
+langchain-text-splitters
+langchain-community
+sentence-transformers
+sqlalchemy
+psycopg2-binary
+unstructured[all-docs]
+python-docx
+openpyxl
