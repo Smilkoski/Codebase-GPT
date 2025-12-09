@@ -9,8 +9,11 @@ venv.bak/
 repo-to-index/
 data/chroma_db/
 app/repo-to-index
-models/
 app/data/
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
 
 # PyCharm / IntelliJ
 .idea/
