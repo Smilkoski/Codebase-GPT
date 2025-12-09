@@ -5,7 +5,7 @@ PDFs, Word, Excel, Python, JavaScript, Markdown, logs… everything is instantly
 
 Built with **FastAPI + Groq (Llama 3.1) + LangChain 1.1 + Chroma + PostgreSQL**  
 Fully Dockerized — runs anywhere in seconds.
-![img.png](img.png)
+![img2.png](img2.png)
 
 
 ## Features
