@@ -33,7 +33,7 @@ USER appuser
 
 # Copy application code
 COPY --chown=appuser:appuser app/ ./app/
-COPY --chown=appuser:appuser templates/ ./templates/
+COPY --chown=appuser:appuser app/templates/ ./templates/
 COPY --chown=appuser:appuser data/ ./data/
 COPY --chown=appuser:appuser repo-to-index/ ./repo-to-index/
 COPY --chown=appuser:appuser models/ ./models/

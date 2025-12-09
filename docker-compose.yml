@@ -7,7 +7,7 @@ services:
       - .env
     volumes:
       - ./app:/app/app
-      - ./templates:/app/templates
+      - ./app/templates:/app/templates
       - ./data/chroma_db:/app/data/chroma_db
       - ./repo-to-index:/app/repo-to-index
       - ./models:/app/models
