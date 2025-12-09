@@ -38,7 +38,7 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 6})
 llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.2)
 
 # Postgres
-POSTGRES_URL = os.getenv("POSTGRES_URL", "postgresql://root:root@localhost:5432/codebase_gpt")
+POSTGRES_URL = os.getenv("POSTGRES_URL", "postgresql://root:root@postgres:5432/codebase_gpt")
 engine = create_engine(POSTGRES_URL)
 
 
@@ -93,6 +93,7 @@ async def query(q: Query):
         return {"answer": answer, "sources": sources}
 
     except Exception as e:
+        print(f'Exception occurred: {e}')
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/upload")

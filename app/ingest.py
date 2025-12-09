@@ -6,7 +6,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain_community.document_loaders import (
-    UnstructuredPDFLoader,
+    PyPDFLoader,
     UnstructuredWordDocumentLoader,
     UnstructuredExcelLoader,
     TextLoader,
@@ -24,7 +24,7 @@ for file_path in DOCS_DIR.rglob("*"):
 
     try:
         if file_path.suffix.lower() == ".pdf":
-            loader = UnstructuredPDFLoader(str(file_path))
+            loader = PyPDFLoader(str(file_path))
         elif file_path.suffix.lower() in [".docx", ".doc"]:
             loader = UnstructuredWordDocumentLoader(str(file_path))
         elif file_path.suffix.lower() in [".xlsx", ".xls"]:

@@ -10,6 +10,6 @@ langchain-community
 sentence-transformers
 sqlalchemy
 psycopg2-binary
-unstructured[all-docs]
 python-docx
 openpyxl
+pypdf

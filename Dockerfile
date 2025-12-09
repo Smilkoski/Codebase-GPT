@@ -17,8 +17,7 @@ WORKDIR /app
 
 # Runtime deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 poppler-utils tesseract-ocr && \
-    rm -rf /var/lib/apt/lists/*
+    libpq5 && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user EARLY
 RUN useradd -m -s /bin/bash appuser
@@ -40,4 +39,4 @@ COPY --chown=appuser:appuser models/ ./models/
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8000", "--reload", "--reload-dir", "/app"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app"]
